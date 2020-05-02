@@ -1,0 +1,12 @@
+- name: fail for unsupported os
+  fail:
+    msg: This playbook runs only on ubuntu
+  when: ansible_os_family != 'Debian'
+- name: install packages for ubuntu
+  apt:
+    name: "{{ item }}"
+    update_cache: yes
+    state: present
+  loop: "{{ packages_ubuntu }}"
+  tags:
+    - nagios

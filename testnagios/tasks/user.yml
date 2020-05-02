@@ -1,0 +1,7 @@
+- name: Create User and Group
+  shell:
+    cmd: sudo make install-groups-users > installgroups.log && sudo usermod -a -G nagios www-data > usermod.log
+  args:
+    chdir: "/tmp/nagioscore-nagios-{{ nagios_version }}/"
+  tags:
+    - nagios

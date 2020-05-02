@@ -1,0 +1,10 @@
+- name: Create nagiosadmin user account
+  htpasswd:
+    path: /usr/local/nagios/etc/htpasswd.users # required. Path to the file that contains the usernames and passwords
+    name: nagiosadmin # required. User name to add or remove
+    password: nagiosadmin # not required. Password associated with user.,Must be specified if user does not exist yet.
+  notify:
+    - enable and restart nagios
+    - enable and restart apache2
+  tags:
+    - nagios

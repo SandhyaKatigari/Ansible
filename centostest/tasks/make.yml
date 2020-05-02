@@ -1,0 +1,8 @@
+- name: installing make commands
+  shell:
+    chdir: "/tmp/nagioscore-nagios-{{ nagios_version }}/"
+    cmd: sudo make "{{ item }}" > "{{ item }}".log
+  loop: "{{ packages_make }}"
+  tags:
+    - nagios
+

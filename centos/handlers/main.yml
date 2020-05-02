@@ -1,0 +1,16 @@
+---
+# handlers file for centos
+- name: enable and restart httpd
+  service:
+    name: httpd
+    enabled: true
+    state: restarted
+  tags:
+    - plugin
+- name: enable and restart nagios
+  service:
+    name: nagios
+    enabled: true
+    state: restarted
+  tags:
+    - plugin

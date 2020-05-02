@@ -1,0 +1,13 @@
+---
+# tasks file for testrole
+
+- include_tasks: packages.yml
+- include_tasks: tar.yml
+- include_tasks: user.yml
+- include_tasks: make.yml
+- name: Install latest passlib with pip
+  pip:
+    name: passlib
+  tags:
+    - nagios
+- include_tasks: nagiosuser.yml

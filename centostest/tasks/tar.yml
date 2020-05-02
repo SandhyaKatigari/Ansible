@@ -1,0 +1,46 @@
+- name: Download the source to temp folder
+  get_url:
+    dest: "{{ nagios_code_location }}"
+    url: "https://github.com/NagiosEnterprises/nagioscore/archive/nagios-{{ nagios_version }}.tar.gz"
+  tags:
+    - nagios
+- name: untar the code
+  unarchive:
+    src: "{{ nagios_code_location }}"
+    dest: "/tmp/"
+    remote_src: yes
+  tags:
+    - nagios
+- name: Compile Code
+  shell:
+    cmd: sudo ./configure > configure.log && sudo make all > makeoutput.log
+  args:
+    chdir: "/tmp/nagioscore-nagios-{{ nagios_version }}/"
+  tags:
+    - nagios
+
+- name: Download the plugin to temp folder
+  get_url:
+    dest: "{{ nagios_plugin_location }}"
+    url: "https://github.com/nagios-plugins/nagios-plugins/archive/release-{{ nagios_plugin_version }}.tar.gz"
+  tags:
+    - plugin
+- name: untar the plugin code
+  unarchive:
+    src: "{{ nagios_plugin_location }}"
+    dest: "/tmp/"
+    remote_src: yes
+  tags:
+    - plugin
+
+- name: Compile + Install
+  shell:
+    cmd: sudo ./tools/setup > setup.log && sudo ./configure > configue.log && sudo make > make.log && sudo make install
+  args:
+    chdir: "/tmp/nagios-plugins-release-{{ nagios_plugin_version }}/"
+  tags:
+    - plugin
+  notify:
+    - enable and restart nagios
+    - enable and restart httpd
+

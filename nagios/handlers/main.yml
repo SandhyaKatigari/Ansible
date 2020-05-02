@@ -1,0 +1,16 @@
+---
+# handlers file for nagios
+- name: enable and restart apache2
+  service:
+    name: apache2
+    enabled: true
+    state: restarted
+  tags:
+    - plugin
+- name: enable and restart nagios
+  service:
+    name: nagios
+    enabled: true
+    state: restarted
+  tags:
+    - plugin
